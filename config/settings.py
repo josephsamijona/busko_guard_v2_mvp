@@ -52,9 +52,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',  # WhiteNoise pour les fichiers statiques
     'django.contrib.staticfiles',
-    
-    # Applications tierces
     'rest_framework',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
+    # Applications tierces
     'corsheaders',
     'crispy_forms',
     'crispy_bootstrap5',
@@ -228,11 +229,24 @@ else:
     }
 
 
-# JWT Settings
+# Configuration JWT pour l'API
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(seconds=int(os.getenv('JWT_ACCESS_TOKEN_LIFETIME', 3600))),
-    'REFRESH_TOKEN_LIFETIME': timedelta(seconds=int(os.getenv('JWT_REFRESH_TOKEN_LIFETIME', 86400))),
-    'SIGNING_KEY': os.getenv('JWT_SECRET_KEY', SECRET_KEY),
+    'ACCESS_TOKEN_LIFETIME': timedelta(seconds=int(os.getenv('JWT_ACCESS_TOKEN_LIFETIME', 900))),     # 15 min par défaut
+    'REFRESH_TOKEN_LIFETIME': timedelta(seconds=int(os.getenv('JWT_REFRESH_TOKEN_LIFETIME', 604800))), # 7 jours par défaut
+    'ROTATE_REFRESH_TOKENS': True,                   # Rotation des tokens de rafraîchissement
+    'BLACKLIST_AFTER_ROTATION': True,                # Blacklister les anciens tokens après rotation
+    'UPDATE_LAST_LOGIN': False,                      # Ne pas mettre à jour last_login à chaque connexion
+    
+    'ALGORITHM': 'HS256',                            # Algorithme de signature
+    'SIGNING_KEY': os.getenv('JWT_SECRET_KEY', SECRET_KEY),  # Clé de signature
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+    
+    'AUTH_HEADER_TYPES': ('Bearer',),                # Type d'en-tête d'authentification
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',        # Nom de l'en-tête d'authentification
+    'USER_ID_FIELD': 'id',                           # Champ pour identifier l'utilisateur
+    'USER_ID_CLAIM': 'user_id',                      # Claim dans le token pour l'ID de l'utilisateur
 }
 
 # CORS Settings
@@ -275,6 +289,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Configuration de REST Framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # JWT pour l'API
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ],

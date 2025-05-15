@@ -1,7 +1,16 @@
 # core/urls.py
 from django.urls import path
+from rest_framework_simplejwt.views import TokenVerifyView
 from core.views.employee_view import login_view,logout_view,home_view,EmployeeProfileDataView,AttendanceStatsView,AttendanceHistoryView,LeaveRequest,LeaveRequestActionView,LeaveRequestCreateView,LeaveRequestDetailView,LeaveRequestListView
 from core.views.kiosk_view import kiosk_view,get_csrf_token,authenticate_card,record_attendance
+from core.views.mobile_api_view import  (
+    CustomTokenObtainPairView,
+    CustomTokenRefreshView,
+    LoginAPIView,
+    LogoutAPIView,
+    EmployeeProfileAPIView
+)
+
 urlpatterns = [
     # Autres URLs existantes...
     
@@ -54,5 +63,15 @@ urlpatterns = [
     # URL pour l'API d'enregistrement d'un pointage
     # Cette URL sera appelée par le JavaScript du kiosque après authentification pour enregistrer une action
     path('api/record-attendance/', record_attendance, name='record_attendance'),
+    path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
+    path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    
+    # Endpoints personnalisés
+    path('login_employee_app/', LoginAPIView.as_view(), name='api_login'),
+    path('logout_employee_app/', LogoutAPIView.as_view(), name='api_logout'),
+    
+    # Endpoints de profil employé
+    path('employee/profile/', EmployeeProfileAPIView.as_view(), name='employee_profile'),
 
 ]

@@ -53,3 +53,4 @@ gunicorn  # Serveur WSGI pour production
 python-dotenv
 django-environ
 
+requests

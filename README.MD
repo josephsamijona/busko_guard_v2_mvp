@@ -1,0 +1,1 @@
+to do readme , doc , mobile app , setup deploymentfile

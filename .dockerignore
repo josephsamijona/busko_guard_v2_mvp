@@ -1,0 +1,43 @@
+# Git
+.git
+.gitignore
+
+# Environnement virtuel Python
+.venv
+venv/
+env/
+
+# Fichiers Python compilés et caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Fichiers de base de données locaux (si vous en utilisez en développement)
+db.sqlite3
+*.sqlite3
+
+# Fichiers d'environnement locaux (ne jamais commiter les secrets)
+.env
+*.env
+
+# Fichiers de configuration IDE
+.vscode/
+.idea/
+
+# Fichiers statiques et médias collectés localement (ils seront générés dans l'image)
+staticfiles/
+media/ # Si vos médias sont gérés par Django localement et stockés ailleurs en prod
+
+# Fichiers OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml

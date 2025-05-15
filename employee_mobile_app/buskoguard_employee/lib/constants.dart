@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // API URLs
 class ApiUrls {
   // Base URL - Remplacer par l'URL réelle de votre serveur
-  static const String baseUrl = 'https://api.buskoguard.com/api';
+  static const String baseUrl = 'https://buskogardmvpinf5000';
   // Endpoints
   static const String login = '$baseUrl/login_employee_app/';
   static const String logout = '$baseUrl/logout_employee_app/';

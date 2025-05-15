@@ -1,0 +1,315 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuskoGuard - Espace Employé</title>
+    <link rel="stylesheet" href="{% static 'css/employee_interface.css' %}">
+    <link rel="stylesheet" href="{% static 'css/employee_interface_extra.css' %}">
+    <!-- Ajout du token CSRF pour les requêtes POST -->
+    {% csrf_token %}
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                    </div>
+                    <div class="logo-text">BuskoGuard</div>
+                </div>
+                <div class="user-actions">
+                    <div class="user-info">
+                        <div class="user-avatar" id="userAvatar">--</div>
+                        <div class="user-name" id="userName">Chargement...</div>
+                    </div>
+                    <form action="{% url 'logout' %}" method="post" id="logoutForm">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 5px;">
+                                <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                            </svg>
+                            Déconnexion
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <ul class="nav-tabs">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" data-screen="homeScreen">
+                        <span class="nav-icon">🏠</span>
+                        Accueil
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-screen="historyScreen">
+                        <span class="nav-icon">📆</span>
+                        Historique
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-screen="requestsScreen">
+                        <span class="nav-icon">📝</span>
+                        Demandes
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Home Screen -->
+            <div id="homeScreen" class="screen active">
+                <div class="profile-card">
+                    <div class="profile-info">
+                        <div class="employee-name" id="profileName">Chargement...</div>
+                        <div class="employee-role" id="profileRole">--</div>
+                        <div class="employee-department" id="profileDept">--</div>
+                        <div class="employee-id" id="profileId">ID: --</div>
+                    </div>
+                    <div class="qr-section">
+                        <div class="qr-title">Votre code QR personnel</div>
+                        <div class="qr-code">
+                            <img src="" class="qr-image" id="profileQrCode" alt="Code QR personnel">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-status">
+                    <div class="status-card">
+                        <div class="status-icon attendance">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                            </svg>
+                        </div>
+                        <div class="status-title">Présences</div>
+                        <div class="status-value" id="presenceValue">--</div>
+                        <div class="status-label" id="presenceLabel">Ce mois</div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-icon leave">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                <path d="M7 11h2v2H7v-2zm14-5v14c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2l.01-14c0-1.1.88-2 1.99-2h1V2h2v2h8V2h2v2h1c1.1 0 2 .9 2 2zM5 8h14V6H5v2zm14 12V10H5v10h14zm-4-7h2v-2h-2v2zm-4 0h2v-2h-2v2z"/>
+                            </svg>
+                        </div>
+                        <div class="status-title">Congés Restants</div>
+                        <div class="status-value" id="leaveValue">--</div>
+                        <div class="status-label">Jours</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Screen -->
+            <div id="historyScreen" class="screen">
+                <h2 class="section-title">Historique de Présence</h2>
+
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <span class="filter-label">Période:</span>
+                        <select class="filter-select" id="periodFilter">
+                            <option value="day">Aujourd'hui</option>
+                            <option value="week" selected>Cette semaine</option>
+                            <option value="month">Ce mois</option>
+                            <option value="custom">Mois précédent</option>
+                            <option value="custom-dates">Personnalisé</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-label">Type:</span>
+                        <select class="filter-select" id="typeFilter">
+                            <option value="ALL" selected>Tous</option>
+                            <option value="IN">Arrivée</option>
+                            <option value="OUT">Départ</option>
+                            <option value="BREAK_START">Pause</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="history-list">
+                    <div class="history-header">
+                        <div>Date</div>
+                        <div>Heure</div>
+                        <div>Type</div>
+                        <div>Durée</div>
+                    </div>
+                    <!-- Les pointages seront chargés dynamiquement ici -->
+                    <div class="loading-spinner" id="attendanceLoader"></div>
+                </div>
+
+                <div class="pagination" id="attendancePagination">
+                    <!-- La pagination sera générée dynamiquement -->
+                </div>
+            </div>
+
+            <!-- Requests Screen -->
+            <div id="requestsScreen" class="screen">
+                <h2 class="section-title">Demandes de Congés</h2>
+                
+                <button class="new-request-btn" id="newRequestBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white" style="vertical-align: middle; margin-right: 5px;">
+                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                    </svg>
+                    Nouvelle Demande
+                </button>
+
+                <div class="tabs-header">
+                    <div class="tab-item active" data-tab="pendingRequests">En attente</div>
+                    <div class="tab-item" data-tab="approvedRequests">Approuvés</div>
+                    <div class="tab-item" data-tab="historyRequests">Historique</div>
+                </div>
+
+                <div id="pendingRequests" class="tab-content active">
+                    <div class="request-list" id="pendingRequestsList">
+                        <!-- Les demandes en attente seront chargées dynamiquement ici -->
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+
+                <div id="approvedRequests" class="tab-content">
+                    <div class="request-list" id="approvedRequestsList">
+                        <!-- Les demandes approuvées seront chargées dynamiquement ici -->
+                    </div>
+                </div>
+
+                <div id="historyRequests" class="tab-content">
+                    <div class="request-list" id="historyRequestsList">
+                        <!-- L'historique des demandes sera chargé dynamiquement ici -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- New Request Modal -->
+    <div id="newRequestModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Nouvelle Demande de Congé</div>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="requestForm">
+                    <div class="form-group">
+                        <label class="form-label">Type de congé</label>
+                        <select class="form-control" id="leaveTypeSelect">
+                            <option value="VACATION">Congé annuel</option>
+                            <option value="SICK">Congé maladie</option>
+                            <option value="PERSONAL">Congé personnel</option>
+                            <option value="OTHER">Autre</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label class="form-label">Date de début</label>
+                            <input type="date" class="form-control" id="startDateInput" required>
+                        </div>
+                        <div class="form-col">
+                            <label class="form-label">Date de fin</label>
+                            <input type="date" class="form-control" id="endDateInput" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Motif</label>
+                        <textarea class="form-control" id="reasonInput" placeholder="Veuillez préciser la raison de votre demande de congé..." required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-modal">Annuler</button>
+                <button class="btn btn-primary" id="submitRequestBtn">Soumettre</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Detail Modal -->
+    <div id="requestDetailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Détails de la Demande</div>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="request-detail">
+                    <div class="detail-group">
+                        <div class="detail-label">Type:</div>
+                        <div class="detail-value" id="detailType">--</div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Période:</div>
+                        <div class="detail-value" id="detailPeriod">--</div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Date de demande:</div>
+                        <div class="detail-value" id="detailRequestDate">--</div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Statut:</div>
+                        <div class="detail-value" id="detailStatus">
+                            <span class="request-status">--</span>
+                        </div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Motif:</div>
+                        <div class="detail-value" id="detailReason">--</div>
+                    </div>
+                    <div class="detail-group" id="processingInfoGroup" style="display: none;">
+                        <div class="detail-label">Traité par:</div>
+                        <div class="detail-value" id="detailProcessedBy">--</div>
+                    </div>
+                    <div class="detail-group" id="responseInfoGroup" style="display: none;">
+                        <div class="detail-label">Date de réponse:</div>
+                        <div class="detail-value" id="detailResponseDate">--</div>
+                    </div>
+                </div>
+                
+                <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
+                
+                <div class="status-label">Suivi de la demande:</div>
+                <div class="status-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-icon active">1</div>
+                        <div class="timeline-line active"></div>
+                        <div class="timeline-text">Soumise</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">2</div>
+                        <div class="timeline-line"></div>
+                        <div class="timeline-text">En révision</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">3</div>
+                        <div class="timeline-line"></div>
+                        <div class="timeline-text">Décision</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">4</div>
+                        <div class="timeline-text">Terminé</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-modal">Fermer</button>
+                
+                <!-- Ce bouton est affiché uniquement pour les demandes en attente -->
+                <button class="btn btn-danger" id="cancelRequestBtn">Annuler la demande</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script principal -->
+    <script src="{% static 'js/employee_interface.js' %}"></script>
+</body>
+</html>

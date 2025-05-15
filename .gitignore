@@ -1,0 +1,110 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Django
+*.log
+*.pot
+*.pyc
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media
+
+# Environnement virtuel
+venv/
+ENV/
+env/
+.env
+.venv
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+*.ipr
+*.iws
+out/
+
+# Spyder
+.spyderproject
+.spyproject
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Pytest
+.pytest_cache/
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Migrations Django (optionnel)
+# */migrations/*.py
+# !*/migrations/__init__.py
+
+# Fichiers statiques collectés
+
+/staticfiles/
+
+# Fichiers média uploadés
+/media/
+
+# Environnement spécifique
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Fichiers de sauvegarde
+*.bak
+*.swp
+*~
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Fichiers spécifiques au projet
+*.sqlite3-shm
+*.sqlite3-wal
+
+# Fichiers de documentation générés
+/docs/_build/
+
+# Fichiers de déploiement
+.elasticbeanstalk/
+.ebextensions/
+user_credentials.json

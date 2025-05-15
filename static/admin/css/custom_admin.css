@@ -1,0 +1,219 @@
+/* static/admin/css/custom_admin.css */
+
+/* Personnalisation de l'en-tête */
+#header {
+    background: #1a3c6e;
+    color: #fff;
+}
+
+#header a:link, #header a:visited {
+    color: #fff;
+}
+
+div.breadcrumbs {
+    background: #2c5aa0;
+}
+
+/* Boutons d'action */
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #1a3c6e;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover {
+    background: #2c5aa0;
+}
+
+.button.default, input[type=submit].default, .submit-row input.default {
+    background: #417690;
+}
+
+.button.default:hover, input[type=submit].default:hover, .submit-row input.default:hover {
+    background: #205067;
+}
+
+/* Styles pour les statuts */
+.status-pending {
+    color: #ff9800;
+    font-weight: bold;
+}
+
+.status-approved {
+    color: #4caf50;
+    font-weight: bold;
+}
+
+.status-rejected {
+    color: #f44336;
+    font-weight: bold;
+}
+
+/* Améliorations des tableaux */
+#changelist table {
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+#changelist table thead th {
+    background: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    text-transform: uppercase;
+    font-size: 0.85em;
+}
+
+#changelist table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Amélioration des filtres */
+#changelist-filter h2 {
+    background: #1a3c6e;
+    border-radius: 4px 4px 0 0;
+}
+
+#changelist-filter li.selected {
+    border-left: 4px solid #1a3c6e;
+}
+
+/* Tableau de bord admin */
+.dashboard .module h2, .dashboard .module caption {
+    background: #1a3c6e;
+}
+
+.dashboard .module table th {
+    background: #f5f5f5;
+}
+
+/* Style pour les actions admin */
+.admin-actions {
+    white-space: nowrap;
+}
+
+.admin-actions .button {
+    padding: 5px 8px;
+    font-size: 0.8em;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+/* Style pour les formulaires */
+.aligned label {
+    color: #666;
+    font-weight: bold;
+}
+
+/* Style pour les messages */
+.messagelist li.success {
+    background: #dff0d8;
+    color: #3c763d;
+    border: 1px solid #d6e9c6;
+}
+
+.messagelist li.warning {
+    background: #fcf8e3;
+    color: #8a6d3b;
+    border: 1px solid #faebcc;
+}
+
+.messagelist li.error {
+    background: #f2dede;
+    color: #a94442;
+    border: 1px solid #ebccd1;
+}
+
+/* QR Code hover effect */
+img[title^="QR-"] {
+    transition: transform 0.3s ease;
+}
+
+img[title^="QR-"]:hover {
+    transform: scale(2);
+    z-index: 1000;
+}
+
+/* Style pour les inlines (horaires, pointages, etc.) */
+.inline-group {
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 30px !important;
+}
+
+.inline-group h2 {
+    background: #f5f5f5 !important;
+    color: #333 !important;
+    font-size: 16px !important;
+    border-bottom: 1px solid #ddd;
+}
+
+.inline-related {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Amélioration visuelle des fieldsets */
+fieldset.module {
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border: none !important;
+    margin-bottom: 20px;
+}
+
+fieldset.module h2 {
+    background: #f9f9f9 !important;
+    border-bottom: 1px solid #eee;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    color: #333 !important;
+}
+
+/* Style spécifique pour les statuts de congés */
+select[name="status"] {
+    padding: 5px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+/* Style pour le sélecteur de date */
+input[type="date"] {
+    padding: 6px 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+/* Améliorations générales */
+.object-tools a:link, .object-tools a:visited {
+    background: #1a3c6e;
+}
+
+.object-tools a:hover, .object-tools a:focus {
+    background: #2c5aa0;
+}
+
+select {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* Personnalisation de la page de connexion */
+.login {
+    background: #f9f9f9;
+}
+
+.login #header {
+    height: auto;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.login .form-row {
+    padding: 5px 0;
+}
+
+.login .submit-row {
+    padding: 15px 0 0;
+    text-align: center;
+}

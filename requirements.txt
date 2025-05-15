@@ -1,0 +1,55 @@
+# Django et extensions de base
+Django
+djangorestframework
+django-cors-headers
+django-filter
+markdown
+
+# Base de données MySQL
+mysqlclient
+dj-database-url
+
+# QR Code et NFC
+django-qr-code
+qrcode
+Pillow  # Pour le traitement d'image (QR codes et photos de profil)
+
+# Gestion de l'authentification et sécurité
+django-allauth
+django-two-factor-auth
+django-otp
+django-defender
+
+# Gestion des fichiers statiques et médias pour l'hébergement
+whitenoise # Gestion des fichiers statiques en production
+django-storages  # Stockage sur des services cloud
+boto3  # Pour AWS S3 (stockage des médias)
+
+# Formulaires et UI améliorés
+django-crispy-forms
+crispy-bootstrap5
+django-widget-tweaks
+
+# Exportation de données et rapports
+openpyxl  # Export Excel
+reportlab # Génération de PDF
+WeasyPrint # PDF à partir de HTML
+
+# Utilitaires divers
+pytz # Gestion des fuseaux horaires
+python-dateutil
+django-import-export # Import/export de données
+django-simple-history # Historique des modifications
+
+# Internationalisation
+babel
+
+# Déploiement et monitoring
+gunicorn  # Serveur WSGI pour production
+
+
+
+# Environnement et configuration
+python-dotenv
+django-environ
+
